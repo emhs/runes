@@ -56,6 +56,7 @@ class Creature():
     
     def __init__(self, pos, inv=[]):
         self.position = pos
+        self.position.creature = self
         self.inventory = inv
         self.character = ('m', curses.A_BOLD)
     

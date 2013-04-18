@@ -24,7 +24,7 @@ def adjacent_cells(row, col, grid):
 class Map():
     def __init__(self, default, cells=()):
         # Initialize map with default cell
-        self.map = [[deepcopy(defaut) for _ in range(80)] for _ in range(21)]
+        self.map = [[deepcopy(default) for _ in range(80)] for _ in range(21)]
         
         # Load pre-specified cells
         for row, col, cell in cells:

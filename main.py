@@ -18,8 +18,7 @@ def main(stdscr):
     
     # Initialize map and player
     active_map = map.Map(architecture.Cell())
-    player = creature.Player()
-    player._bamf(active_map[8][8])
+    player = creature.Player(pos=active_map[8][8])
     
     # Initial render
     map_render = active_map.render()
@@ -56,4 +55,4 @@ def main(stdscr):
     curses.nocbreak()
 
 if __name__ == '__main__':
-    curses.wrapper.wrapper(main)
+    curses.wrapper(main)
