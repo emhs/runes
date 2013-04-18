@@ -18,7 +18,7 @@ def main(stdscr):
     
     # Initialize map and player
     active_map = map.Map(architecture.Cell())
-    player = creature.Player(pos=active_map[8][8])
+    player = creature.Player(pos=active_map.map[8][8])
     
     # Initial render
     map_render = active_map.render()
