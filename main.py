@@ -4,6 +4,7 @@ import curses.wrapper
 from runes import architecture
 from runes import map
 from runes import creature
+import sys
 
 def main(stdscr):
     curses.cbreak()
@@ -24,6 +25,7 @@ def main(stdscr):
     map_render = active_map.render()
     for row in range(21):
         for col in range(80):
+            sys.stderr.write("Row: {row}, Col: {col}, Char: {char}\n".format(row=row, col=col, char=map_render[row][col][0]))
             map_window.addstr(row, col, map_render[row][col][0], map_render[row][col][1])
     
     # Main loop
