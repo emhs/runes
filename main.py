@@ -24,7 +24,7 @@ def main(stdscr):
     map_render = active_map.render()
     for row in range(21):
         for col in range(80):
-            map_window.addstr(row, col, *map_render[row][col])
+            map_window.addstr(row, col, map_render[row][col][0], map_render[row][col][1])
     
     # Main loop
     char = stdscr.getkey()
