@@ -39,6 +39,17 @@ class Cell():
         self.contents = contents # Objects contained within the cell
         self.inscriptions = inscriptions # Runic inscriptions on this cell
         self.adjacent = []
+        self.character = ('.', curses.A_NORMAL)
+    
+    def render(self):
+        if self.creature:
+            return self.creature.render()
+        elif self.contents:
+            return self.contents[0].render()
+        elif self.inscriptions:
+            return self.inscriptions[0].render()
+        else:
+            return self.character
     
 def wall(contents=[], inscriptions=[], creature=[], open=False, lit=False, 
         seen=False, glow=False):
