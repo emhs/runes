@@ -27,3 +27,84 @@ class CellOccupied(Error):
         else:
             self.creature = dest.creature
 
+class InvalidDirection(Error):
+    """Exception raised on attempt to move in an invalid direction.
+    
+    Attributes:
+        direction   -- attempted movement direction
+    """
+    
+    def __init__(self, dir):
+        self.direction = dir
+
+class Creature():
+    """Base creature class
+    
+    Attributes:
+        position    -- current location
+        inventory   -- items held by the creature
+    
+    Methods:
+        go_<dir>()  -- Go to the next adjacent cell to the <dir> (Can be north, 
+                        south, east, west, northeast, southeast, southwest, or 
+                        northwest)
+        go(dir)     -- Alias to the appropriate go_<dir>() method
+        _bamf(dest) -- Teleport the creature to destination Cell dest
+    """
+    
+    def __init__(self, pos, inv=[]):
+        self.position = pos
+        self.inventory = inv
+    
+    def _bamf(self, dest):
+        if not dest.open:
+            raise MovementBlocked(dest)
+        elif dest.creature:
+            raise CellOccupied(dest)
+        else:
+            self.position.creature = None
+            dest.creature = self
+            self.position = dest
+    
+    def go(self, dir):
+        try:
+            move = getattr(self, "go_" + dir)
+            move()
+        except:
+            raise InvalidDirection(dir)
+    
+    def go_north(self):
+        dest = self.position.adjacent[0]
+        _bamf(dest)
+    
+    def go_northeast(self):
+        dest = self.position.adjacent[1]
+        _bamf(dest)
+    
+    def go_east(self):
+        dest = self.position.adjacent[2]
+        _bamf(dest)
+    
+    def go_southeast(self):
+        dest = self.position.adjacent[3]
+        _bamf(dest)
+    
+    def go_south(self):
+        dest = self.position.adjacent[4]
+        _bamf(dest)
+    
+    def go_southwest(self):
+        dest = self.position.adjacent[5]
+        _bamf(dest)
+    
+    def go_west(self):
+        dest = self.position.adjacent[6]
+        _bamf(dest)
+    
+    def go_northwest(self):
+        dest = self.position.adjacent[7]
+        _bamf(dest)
+    
+class Player(Creature):
+    def __init__(self, pos, inv=[]):
+        Creature.__init__(self, pos, inv)
