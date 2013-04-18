@@ -1,10 +1,10 @@
 #!/usr/bin/env python
+import sys
 import curses
 import curses.wrapper
 from runes import architecture
 from runes import map
 from runes import creature
-import sys
 
 def main(stdscr):
     curses.cbreak()
