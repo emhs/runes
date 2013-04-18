@@ -1,3 +1,5 @@
+import curses
+
 class Error(Exception):
     """Base class for creature exceptions"""
     pass
@@ -55,6 +57,7 @@ class Creature():
     def __init__(self, pos, inv=[]):
         self.position = pos
         self.inventory = inv
+        self.character = ('m', curses.A_BOLD)
     
     def _bamf(self, dest):
         if not dest.open:
@@ -121,6 +124,10 @@ class Creature():
             raise InvalidDirection('northwest')
         _bamf(dest)
     
+    def render(self):
+        return self.character
+    
 class Player(Creature):
     def __init__(self, pos, inv=[]):
         Creature.__init__(self, pos, inv)
+        self.character = ('@', curses.A_BOLD)
