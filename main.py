@@ -26,7 +26,7 @@ def main(stdscr):
     for row in range(21):
         for col in range(80):
             sys.stderr.write("Row: {row}, Col: {col}, Char: {char}\n".format(row=row, col=col, char=map_render[row][col][0]))
-            map_window.addstr(row, col, map_render[row][col][0], map_render[row][col][1])
+            map_window.addch(row, col, ord(map_render[row][col][0]), map_render[row][col][1])
     stdscr.refresh()
     
     # Main loop
