@@ -34,3 +34,6 @@ class Map():
         for row in range(21):
             for col in range(80):
                 self.map[row][col].adjacent = adjacent_cells(row, col, self.map)
+    
+    def render(self):
+        return '\n'.join([''.join([cell.render() for cell in row]) for row in self.map])
