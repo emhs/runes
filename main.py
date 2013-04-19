@@ -1,62 +1,50 @@
 #!/usr/bin/env python
 import sys
-import curses
-import curses.wrapper
+import urwid
 from runes import architecture
 from runes import map
 from runes import creature
 
-def main(stdscr):
-    curses.cbreak()
-    curses.curs_set(0)
-    # Initialize map_window to display the map
-    map_height = 21
-    map_width = 80
-    map_start_x = 0
-    map_start_y = 0
-    map_window = curses.newwin(map_height, map_width, map_start_y, map_start_x)
-    map_window.border()
+def handle_keys(key):
+    # Movement keys
+    if key == 'h':
+        player.go_west()
+    elif key == 'j':
+        player.go_south()
+    elif key == 'k':
+        player.go_north()
+    elif key == 'l':
+        player.go_east()
+    elif key == 'u':
+        player.go_northeast()
+    elif key == 'y':
+        player.go_northwest()
+    elif key == 'n':
+        player.go_southeast()
+    elif key == 'b':
+        player.go_southwest()
+    # Exit game
+    elif key in ('q', 'Q'):
+        raise urwid.ExitMainLoop()
     
+    # Re-render map after turn
+    map_box.set_text(active_map.render())
+
+def main(stdscr):
     # Initialize map and player
     active_map = map.Map(architecture.Cell())
     player = creature.Player(pos=active_map.map[8][8])
     
-    # Initial render
-    map_render = active_map.render()
-    for row in range(21):
-        for col in range(80):
-            sys.stderr.write("Row: {row}, Col: {col}, Char: {char}\n".format(row=row, col=col, char=map_render[row][col][0]))
-            map_window.addch(row, col, ord(map_render[row][col][0]), map_render[row][col][1])
-    stdscr.refresh()
+    # Initialize layout
+    map_box = urwid.Text(active_map.render())
+    status_bar = Text()
+    div = urwid.Divider()
+    messages = urwid.ListBox([Text('Welcome to RUNES')])
+    pile = urwid.Pile([map_box, status_bar, div, messages])
+    top = urwid.Filler(pile, valign='top')
     
-    # Main loop
-    char = stdscr.getkey()
-    while char != 'Q':
-        if char == 'h':
-            player.go_west()
-        elif char == 'j':
-            player.go_south()
-        elif char == 'k':
-            player.go_north()
-        elif char == 'l':
-            player.go_east()
-        elif char == 'u':
-            player.go_northeast()
-        elif char == 'y':
-            player.go_northwest()
-        elif char == 'n':
-            player.go_southeast()
-        elif char == 'b':
-            player.go_southwest()
-        # Re-render map
-        map_render = active_map.render()
-        for row in range(21):
-            for col in range(80):
-                map_window.addstr(row, col, *map_render[row][col])
-        stdscr.refresh()
-        char = stdscr.getkey()
-    
-    curses.nocbreak()
+    loop = urwid.MainLoop(top, unhandled_input=handle_keys)
+    loop.run()
 
 if __name__ == '__main__':
     curses.wrapper(main)

@@ -39,7 +39,7 @@ class Cell():
         self.contents = contents # Objects contained within the cell
         self.inscriptions = inscriptions # Runic inscriptions on this cell
         self.adjacent = []
-        self.character = ('.', curses.A_NORMAL)
+        self.character = '.'
     
     def render(self):
         if self.creature:
