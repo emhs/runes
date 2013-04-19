@@ -79,49 +79,49 @@ class Creature():
         dest = self.position.adjacent[0]
         if not dest:
             raise InvalidDirection('north')
-        _bamf(dest)
+        self._bamf(dest)
     
     def go_northeast(self):
         dest = self.position.adjacent[1]
         if not dest:
             raise InvalidDirection('northeast')
-        _bamf(dest)
+        self._bamf(dest)
     
     def go_east(self):
         dest = self.position.adjacent[2]
         if not dest:
             raise InvalidDirection('east')
-        _bamf(dest)
+        self._bamf(dest)
     
     def go_southeast(self):
         dest = self.position.adjacent[3]
         if not dest:
             raise InvalidDirection('southeast')
-        _bamf(dest)
+        self._bamf(dest)
     
     def go_south(self):
         dest = self.position.adjacent[4]
         if not dest:
             raise InvalidDirection('south')
-        _bamf(dest)
+        self._bamf(dest)
     
     def go_southwest(self):
         dest = self.position.adjacent[5]
         if not dest:
             raise InvalidDirection('southwest')
-        _bamf(dest)
+        self._bamf(dest)
     
     def go_west(self):
         dest = self.position.adjacent[6]
         if not dest:
             raise InvalidDirection('west')
-        _bamf(dest)
+        self._bamf(dest)
     
     def go_northwest(self):
         dest = self.position.adjacent[7]
         if not dest:
             raise InvalidDirection('northwest')
-        _bamf(dest)
+        self._bamf(dest)
     
     def render(self):
         return self.character
