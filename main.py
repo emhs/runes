@@ -39,7 +39,7 @@ def main():
     map_box = urwid.Text(('map', active_map.render()))
     status_bar = urwid.Text(('status', 'Running...'))
     div = urwid.Divider()
-    messages = urwid.ListBox([Text('Welcome to RUNES')])
+    messages = urwid.ListBox([urwid.Text('Welcome to RUNES')])
     pile = urwid.Pile([map_box, status_bar, div, messages])
     top = urwid.Filler(pile, valign='top')
     
