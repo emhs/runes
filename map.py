@@ -9,17 +9,21 @@ def adjacent_cells(row, col, grid):
         grid        -- grid of cells
     """
     
+    adjacents = []
+    
     coordinates = ((row-1, col), (row-1, col+1), (row, col+1), (row+1, col+1), 
         (row+1, col), (row+1, col-1), (row, col-1), (row-1, col-1))
     for rr, cc in coordinates:
         if rr<0 or cc<0:
-            yield None
+            adjacents.append(None)
         elif rr>=21:
-            yield None
+            adjacents.append(None)
         elif cc>=80:
-            yield None
+            adjacents.append(None)
         else:
-            yield grid[rr][cc]
+            adjacents.append(grid[rr][cc])
+    
+    return adjacents
 
 class Map():
     def __init__(self, default, cells=()):
