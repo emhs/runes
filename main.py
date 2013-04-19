@@ -30,7 +30,7 @@ def handle_keys(key):
     # Re-render map after turn
     map_box.set_text(('map', active_map.render()))
 
-def main():
+if __name__ == '__main__':
     # Initialize map and player
     active_map = map.Map(architecture.Cell())
     player = creature.Player(pos=active_map.map[8][8])
@@ -45,6 +45,3 @@ def main():
     
     loop = urwid.MainLoop(top, unhandled_input=handle_keys)
     loop.run()
-
-if __name__ == '__main__':
-    main()
