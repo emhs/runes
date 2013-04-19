@@ -40,7 +40,7 @@ def main():
     status_bar = urwid.Text(('status', 'Running...'))
     div = urwid.Divider()
     messages = urwid.ListBox([urwid.Text('Welcome to RUNES')])
-    pile = urwid.Pile([map_box, status_bar, div, messages])
+    pile = urwid.Pile([map_box, status_bar, div, urwid.BoxAdapter(messages)])
     top = urwid.Filler(pile, valign='top')
     
     loop = urwid.MainLoop(top, unhandled_input=handle_keys)
