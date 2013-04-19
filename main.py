@@ -28,16 +28,16 @@ def handle_keys(key):
         raise urwid.ExitMainLoop()
     
     # Re-render map after turn
-    map_box.set_text(active_map.render())
+    map_box.set_text(('map', active_map.render()))
 
-def main(stdscr):
+def main():
     # Initialize map and player
     active_map = map.Map(architecture.Cell())
     player = creature.Player(pos=active_map.map[8][8])
     
     # Initialize layout
-    map_box = urwid.Text(active_map.render())
-    status_bar = Text()
+    map_box = urwid.Text(('map', active_map.render()))
+    status_bar = urwid.Text(('status', 'Running...'))
     div = urwid.Divider()
     messages = urwid.ListBox([Text('Welcome to RUNES')])
     pile = urwid.Pile([map_box, status_bar, div, messages])
@@ -47,4 +47,4 @@ def main(stdscr):
     loop.run()
 
 if __name__ == '__main__':
-    curses.wrapper(main)
+    main()
