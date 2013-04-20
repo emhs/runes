@@ -11,8 +11,6 @@ class MovementBlocked(Error):
     def __init__(self, dest):
         self.dest = dest
 
-import curses
-
 class Cell():
     """Base map cell.
     
@@ -39,7 +37,11 @@ class Cell():
         self.contents = contents # Objects contained within the cell
         self.inscriptions = inscriptions # Runic inscriptions on this cell
         self.adjacent = []
-        self.character = '.'
+
+    def character(self):
+        char = '.'
+        if not self.open:
+            char = '#'
     
     def render(self):
         if self.creature:
