@@ -44,3 +44,9 @@ class Map():
         for row in rendered:
             row.append('\n')
         return rendered
+
+    def draw_point(self, point, type='wall'):
+        if type == 'wall':
+            self.map[point[0]][point[1]].open = False
+        elif type == 'floor':
+            self.map[point[0]][point[1]].open = True
