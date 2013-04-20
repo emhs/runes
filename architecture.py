@@ -42,6 +42,7 @@ class Cell():
         char = '.'
         if not self.open:
             char = '#'
+        return char
     
     def render(self):
         if self.creature:
