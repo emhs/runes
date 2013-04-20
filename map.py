@@ -40,4 +40,7 @@ class Map():
                 self.map[row][col].adjacent = adjacent_cells(row, col, self.map)
     
     def render(self):
-        return [[cell.render() for cell in row].append('\n') for row in self.map]
+        rendered = [[cell.render() for cell in row] for row in self.map]
+        for row in rendered:
+            row.append('\n')
+        return rendered
