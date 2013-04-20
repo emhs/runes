@@ -34,6 +34,7 @@ if __name__ == '__main__':
     # Initialize map and player
     active_map = map.Map(architecture.Cell())
     player = creature.Player(pos=active_map.map[8][8])
+    active_map.draw_shape(((10,10), (10,20), (20,20), (20, 10)), closed=True)
     
     # Initialize layout
     map_box = urwid.Text(('map', active_map.render()))

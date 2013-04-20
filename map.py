@@ -79,7 +79,7 @@ class Map():
             if dy>dx:
                 xx = 0
                 for x in range(x0, x1+1, sign):
-                    for y in range(y0+xx*slope, y1+(xx+1)*slope)
+                    for y in range(y0+xx*slope, y1+(xx+1)*slope):
                         self.draw_point((y,x), type=type)
                     xx += 1
             elif dx>dy:
