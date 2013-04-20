@@ -6,26 +6,30 @@ from runes import map
 from runes import creature
 
 def handle_keys(key):
-    # Movement keys
-    if key == 'h':
-        player.go_west()
-    elif key == 'j':
-        player.go_south()
-    elif key == 'k':
-        player.go_north()
-    elif key == 'l':
-        player.go_east()
-    elif key == 'u':
-        player.go_northeast()
-    elif key == 'y':
-        player.go_northwest()
-    elif key == 'n':
-        player.go_southeast()
-    elif key == 'b':
-        player.go_southwest()
-    # Exit game
-    elif key in ('q', 'Q'):
-        raise urwid.ExitMainLoop()
+    try:
+        # Movement keys
+        if key == 'h':
+            player.go_west()
+        elif key == 'j':
+            player.go_south()
+        elif key == 'k':
+            player.go_north()
+        elif key == 'l':
+            player.go_east()
+        elif key == 'u':
+            player.go_northeast()
+        elif key == 'y':
+            player.go_northwest()
+        elif key == 'n':
+            player.go_southeast()
+        elif key == 'b':
+            player.go_southwest()
+        # Exit game
+        elif key in ('q', 'Q'):
+            raise urwid.ExitMainLoop()
+    except creature.InvalidDirection as mb:
+        messages.body.contents.append(urwid.Text('Bump! Can\'t go {dir} here'.format(dir=mb.direction)))
+        messages.body.set_focus(messages.body.get_focus()[1]+1)
     
     # Re-render map after turn
     map_box.set_text(('map', active_map.render()))

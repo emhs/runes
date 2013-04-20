@@ -1,3 +1,6 @@
+dir = ['north', 'northeast', 'east', 'southeast', 'south', 'southwest',
+        'west', 'northwest']
+
 class Error(Exception):
     """Base class for creature exceptions"""
     pass
@@ -60,7 +63,11 @@ class Creature():
     
     def _bamf(self, dest):
         if not dest.open:
-            raise MovementBlocked(dest)
+            if dest in self.position.adjacent:
+                dirr = dir[self.position.adjacent.index(dest)]
+                raise InvalidDirection(dirr)
+            else:
+                raise MovementBlocked(dest)
         elif dest.creature:
             raise CellOccupied(dest)
         else:
