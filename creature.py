@@ -132,6 +132,9 @@ class Creature():
     
     def render(self):
         return self.character
+
+    def open_door(self, dirr):
+        self.position.adjacent[dir.index(dirr)].open_door()
     
 class Player(Creature):
     def __init__(self, pos, inv=[]):
