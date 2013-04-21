@@ -50,6 +50,10 @@ class Map():
             self.map[point[0]][point[1]].open = False
         elif type == 'floor':
             self.map[point[0]][point[1]].open = True
+            self.map[point[0]][point[1]].open = False
+        elif type == 'door':
+            self.map[point[0]][point[1]].open = False
+            self.map[point[0]][point[1]].door = True
 
     def draw_line(self, start, end, type='wall'):
         if start[0] == end[0]:
