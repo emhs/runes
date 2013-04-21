@@ -28,8 +28,9 @@ class Cell():
     """
     
     def __init__(self, contents=[], inscriptions=[], creature=None, open=True, 
-            lit=False, seen=False, glow=False):
+            door=False, lit=False, seen=False, glow=False):
         self.open = open # Cell passabiliy
+        self.door = door
         self.lit = lit # Cell is in range and LOS of a light source
         self.seen = seen # Cell is in player FOV
         self.glow = glow # Cell is permanently lit by its own light source
@@ -39,9 +40,16 @@ class Cell():
         self.adjacent = []
 
     def character(self):
-        char = '.'
         if not self.open:
-            char = '#'
+            if self.door:
+                char = '+'
+            else:
+                char = '#'
+        else:
+            if self.door:
+                char = '-'
+            else:
+                char = '.'
         return char
     
     def render(self):
@@ -54,6 +62,6 @@ class Cell():
         else:
             return self.character()
     
-def wall(contents=[], inscriptions=[], creature=[], open=False, lit=False, 
-        seen=False, glow=False):
+def wall(contents=[], inscriptions=[], creature=[], open=False, door=False, 
+        lit=False, seen=False, glow=False):
     return Cell(contents, inscriptions, creature, open, lit, seen, glow)
