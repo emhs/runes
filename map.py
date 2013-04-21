@@ -56,40 +56,30 @@ class Map():
             self.map[point[0]][point[1]].door = True
 
     def draw_line(self, start, end, type='wall'):
-        if start[0] == end[0]:
-            for x in range(start[1], end[1]):
-                self.draw_point((start[0], x), type=type)
-        elif start[1] == end[1]:
-            for y in range(start[0], end[0]):
+        y0, x0 = start
+        y1, x1 = end
+        dy = y1-y0
+        dx = x1-x0
+        dy_sign = 1 if dy >= 0 else -1
+        dx_sign = 1 if dx >= 0 else -1
+        if dy == 0:
+            for x in range(x0, x1, dx_sign):
+                self.draw_point((y0, x), type=type)
+        elif dx == 0:
+            for y in range(y0, y1, dy_sign):
                 self.draw_point((y, start[1]), type=type)
         else:
-            if start[0] > end[0]:
-                y0 = end[0]
-                y1 = start[0]
-                x0 = end[1]
-                x1 = start[1]
-            else:
-                y0 = start[0]
-                y1 = end[0]
-                x0 = start[1]
-                y0 = end[1]
-            dy = y1 - y0
-            dx = x1 - x0
-            slope = round(dy/dx)
-            if dx < 0:
-                sign = -1
-            else:
-                sign = 1
+            slope = dy/dx
             if dy>dx:
                 xx = 0
-                for x in range(x0, x1+1, sign):
-                    for y in range(y0+xx*slope, y1+(xx+1)*slope):
+                for x in range(x0, x1+1, dx_sign):
+                    for y in range(y0+xx*slope, y1+(xx+1)*slope, dy_sign):
                         self.draw_point((y,x), type=type)
                     xx += 1
             elif dx>dy:
                 yy = 0
-                for y in range(y0, y1+1):
-                    for x in range(x0+yy/slope, x1+(yy+1)/slope):
+                for y in range(y0, y1+1, dy_sign):
+                    for x in range(x0+yy/slope, x1+(yy+1)/slope, dx_sign):
                         self.draw_point((y,x), type=type)
     
     def draw_shape(self, points, closed=False, type='wall'):
