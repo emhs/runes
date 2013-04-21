@@ -61,6 +61,10 @@ class Cell():
             return self.inscriptions[0].render()
         else:
             return self.character()
+
+    def open_door(self):
+        if self.door:
+            self.open = True
     
 def wall(contents=[], inscriptions=[], creature=[], open=False, door=False, 
         lit=False, seen=False, glow=False):
