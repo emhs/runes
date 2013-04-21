@@ -5,25 +5,35 @@ from runes import architecture
 from runes import map
 from runes import creature
 
+command = ''
+command_function = {}
+direction_keys = {
+        'h': 'west',
+        'j': 'south',
+        'k': 'north',
+        'l': 'east',
+        'u': 'northeast',
+        'y': 'northwest',
+        'b': 'southwest',
+        'n': 'southeast'}
+
+def command_open(key):
+    if key in direction_keys:
+        player.open_door(direction_keys[key])
+        command = ''
+command_function['open'] = command_open
+
 def handle_keys(key):
+    global command
+    if command:
+        command_function[command](key)
     try:
         # Movement keys
-        if key == 'h':
-            player.go_west()
-        elif key == 'j':
-            player.go_south()
-        elif key == 'k':
-            player.go_north()
-        elif key == 'l':
-            player.go_east()
-        elif key == 'u':
-            player.go_northeast()
-        elif key == 'y':
-            player.go_northwest()
-        elif key == 'n':
-            player.go_southeast()
-        elif key == 'b':
-            player.go_southwest()
+        if key in direction_keys:
+            player.go(direction_keys[key])
+        # Doors
+        elif key == 'o':
+            command = 'open'
         # Exit game
         elif key in ('q', 'Q'):
             raise urwid.ExitMainLoop()
