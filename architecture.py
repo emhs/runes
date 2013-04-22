@@ -1,16 +1,3 @@
-class Error(Exception):
-    """Base class for creature exceptions"""
-    pass
-
-class MovementBlocked(Error):
-    """Exception raised for movement to a blocked destination cell.
-    
-    Attributes:
-        dest -- blocked destination cell
-    """
-    def __init__(self, dest):
-        self.dest = dest
-
 class Cell():
     """Base map cell.
     
