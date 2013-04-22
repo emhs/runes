@@ -32,6 +32,7 @@ class Creature():
             dest.creature = self
             self.position = dest
             output.extend([('debug', 'Bamf!')])
+        return output
     
     def go(self, dirr):
         output = []
@@ -41,6 +42,7 @@ class Creature():
             output.extend([('debug', 'Moved {dir}'.format(dir=dirr))])
         else:
             output.extend([('info', 'I think that\'s a wall ',format(dir=dirr))])
+        return output
     
     def render(self):
         return self.character
