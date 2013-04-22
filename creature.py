@@ -48,10 +48,9 @@ class Creature():
         inventory   -- items held by the creature
     
     Methods:
-        go_<dir>()  -- Go to the next adjacent cell to the <dir> (Can be north, 
+        go(dir)     -- Go to the next adjacent cell to the <dir> (Can be north, 
                         south, east, west, northeast, southeast, southwest, or 
                         northwest)
-        go(dir)     -- Alias to the appropriate go_<dir>() method
         _bamf(dest) -- Teleport the creature to destination Cell dest
     """
     
@@ -59,82 +58,41 @@ class Creature():
         self.position = pos
         self.position.creature = self
         self.inventory = inv
-        self.character = 'm'
+        self.character = ('creature', 'm')
     
     def _bamf(self, dest):
+        output = []
         if not dest.open:
-            if dest in self.position.adjacent:
-                dirr = dir[self.position.adjacent.index(dest)]
-                raise InvalidDirection(dirr)
-            else:
-                raise MovementBlocked(dest)
+            output.extend([('debug', 'Can\'t go there')])
         elif dest.creature:
-            raise CellOccupied(dest)
+            output.extend([('debug', 'Occupied')])
         else:
             self.position.creature = None
             dest.creature = self
             self.position = dest
+            output.extend([('debug', 'Bamf!')])
     
-    def go(self, dir):
-        try:
-            move = getattr(self, "go_" + dir)
-            move()
-        except:
-            raise InvalidDirection(dir)
-    
-    def go_north(self):
-        dest = self.position.adjacent[0]
-        if not dest:
-            raise InvalidDirection('north')
-        self._bamf(dest)
-    
-    def go_northeast(self):
-        dest = self.position.adjacent[1]
-        if not dest:
-            raise InvalidDirection('northeast')
-        self._bamf(dest)
-    
-    def go_east(self):
-        dest = self.position.adjacent[2]
-        if not dest:
-            raise InvalidDirection('east')
-        self._bamf(dest)
-    
-    def go_southeast(self):
-        dest = self.position.adjacent[3]
-        if not dest:
-            raise InvalidDirection('southeast')
-        self._bamf(dest)
-    
-    def go_south(self):
-        dest = self.position.adjacent[4]
-        if not dest:
-            raise InvalidDirection('south')
-        self._bamf(dest)
-    
-    def go_southwest(self):
-        dest = self.position.adjacent[5]
-        if not dest:
-            raise InvalidDirection('southwest')
-        self._bamf(dest)
-    
-    def go_west(self):
-        dest = self.position.adjacent[6]
-        if not dest:
-            raise InvalidDirection('west')
-        self._bamf(dest)
-    
-    def go_northwest(self):
-        dest = self.position.adjacent[7]
-        if not dest:
-            raise InvalidDirection('northwest')
-        self._bamf(dest)
+    def go(self, dirr):
+        output = []
+        dest = self.position.adjacent[dirr]
+        if dest:
+            output.extend(self._bamf(dest))
+            output.extend([('debug', 'Moved {dir}'.format(dir=dirr))])
+        else:
+            output.extend([('info', 'I think that\'s a wall ',format(dir=dirr))])
     
     def render(self):
         return self.character
 
     def open_door(self, dirr):
-        self.position.adjacent[dir.index(dirr)].open_door()
+        output = []
+        if self.door:
+            self.position.adjacent[dirr].open_door()
+            output.extend([('debug', 'Opened door to the '
+                '{dirr}'.format(dirr=dirr))])
+        else:
+            output.extend([('info', 'There\'s no door there')])
+        return output
     
 class Player(Creature):
     def __init__(self, pos, inv=[]):

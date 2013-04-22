@@ -9,19 +9,21 @@ def adjacent_cells(row, col, grid):
         grid        -- grid of cells
     """
     
-    adjacents = []
+    adjacents = {}
     
-    coordinates = ((row-1, col), (row-1, col+1), (row, col+1), (row+1, col+1), 
-        (row+1, col), (row+1, col-1), (row, col-1), (row-1, col-1))
-    for rr, cc in coordinates:
+    coordinates = ((row-1, col, 'north'), (row-1, col+1, 'northeast'),
+            (row, col+1, 'east'), (row+1, col+1, 'southeast'), 
+            (row+1, col, 'south'), (row+1, col-1, 'southwest'), 
+            (row, col-1, 'west'), (row-1, col-1, 'northwest'))
+    for rr, cc, dir in coordinates:
         if rr<0 or cc<0:
-            adjacents.append(None)
+            adjacents[dir] = None
         elif rr>=21:
-            adjacents.append(None)
+            adjacents[dir] = None
         elif cc>=80:
-            adjacents.append(None)
+            adjacents[dir] = None
         else:
-            adjacents.append(grid[rr][cc])
+            adjacents[dir] = grid[rr][cc]
     
     return adjacents
 
