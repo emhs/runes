@@ -36,11 +36,11 @@ direction_keys = {
         'n': 'southeast'}
 
 def command_open(key):
+    output = []
     if key in direction_keys:
-        output = []
         output.extend(player.open_door(direction_keys[key]))
-        command = ''
-        return output
+    command = ''
+    return output
 command_function['open'] = command_open
 
 def handle_keys(key):
@@ -48,15 +48,16 @@ def handle_keys(key):
     output = []
     if command:
         output.extend(command_function[command](key))
-    # Movement keys
-    if key in direction_keys:
-        output.extend(player.go(direction_keys[key]))
-    # Doors
-    elif key == 'o':
-        command = 'open'
-    # Exit game
-    elif key in ('q', 'Q'):
-        raise urwid.ExitMainLoop()
+    else:
+        # Movement keys
+        if key in direction_keys:
+            output.extend(player.go(direction_keys[key]))
+        # Doors
+        elif key == 'o':
+            command = 'open'
+        # Exit game
+        elif key in ('q', 'Q'):
+            raise urwid.ExitMainLoop()
     if output:
         output = output_filter(output, args)
         messages.body.contents.extend(map(urwid.Text, output))
