@@ -70,6 +70,7 @@ if __name__ == '__main__':
     active_map = level.Map(architecture.Cell())
     player = creature.Player(pos=active_map.map[8][8])
     active_map.draw_shape(((10,10), (10,20), (20,20), (20, 10)), closed=True)
+    active_map.draw_point((15, 20), type='door')
     
     # Initialize layout
     map_box = urwid.Text(('map', active_map.render()))
