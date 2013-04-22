@@ -44,6 +44,15 @@ def command_open(key):
     return output
 command_function['open'] = command_open
 
+def command_close(key):
+    global command
+    output = []
+    if key in direction_keys:
+        output.extend(player.close_door(direction_keys[key]))
+    command = ''
+    return output
+command_function['close'] = command_close
+
 def handle_keys(key):
     global command
     output = []
@@ -56,6 +65,8 @@ def handle_keys(key):
         # Doors
         elif key == 'o':
             command = 'open'
+        elif key == 'c':
+            command = 'close'
         # Exit game
         elif key in ('q', 'Q'):
             raise urwid.ExitMainLoop()

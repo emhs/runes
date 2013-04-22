@@ -58,6 +58,17 @@ class Creature():
             output.extend([('info', 'There\'s no door there')])
         return output
     
+    def close_door(self, dirr):
+        output = []
+        dest = self.position.adjacent[dirr]
+        if dest.door:
+            dest.close_door()
+            output.extend([('debug', 'Closed door to the '
+                '{dirr}'.format(dirr=dirr))])
+        else:
+            output.extend([('info', 'There\'s no door there')])
+        return output
+    
 class Player(Creature):
     def __init__(self, pos, inv=[]):
         Creature.__init__(self, pos, inv)

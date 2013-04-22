@@ -52,6 +52,10 @@ class Cell():
     def open_door(self):
         if self.door:
             self.open = True
+
+    def close_door(self):
+        if self.door:
+            self.open = False
     
 def wall(contents=[], inscriptions=[], creature=[], open=False, door=False, 
         lit=False, seen=False, glow=False):
