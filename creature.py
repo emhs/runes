@@ -41,7 +41,7 @@ class Creature():
             output.extend([('debug', 'Tried to move {dir}'.format(dir=dirr))])
             output.extend(self._bamf(dest))
         else:
-            output.extend([('info', 'I think that\'s a wall ')])
+            output.extend([('info', 'I think that\'s a wall')])
         return output
     
     def render(self):
@@ -49,8 +49,9 @@ class Creature():
 
     def open_door(self, dirr):
         output = []
-        if self.door:
-            self.position.adjacent[dirr].open_door()
+        dest = self.position.adjacent[dirr]
+        if dest.door:
+            dest.open_door()
             output.extend([('debug', 'Opened door to the '
                 '{dirr}'.format(dirr=dirr))])
         else:
