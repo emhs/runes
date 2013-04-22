@@ -60,7 +60,7 @@ def handle_keys(key):
     if output:
         output = output_filter(output, args)
         messages.body.contents.extend(map(urwid.Text, output))
-        messages.body.set_focus(messages.body.get_focus()[1]+1)
+        messages.body.set_focus(messages.body.get_focus()[1]+len(output))
     
     # Re-render map after turn
     map_box.set_text(('map', active_map.render()))
