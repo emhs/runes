@@ -41,7 +41,7 @@ class Creature():
             output.extend([('debug', 'Tried to move {dir}'.format(dir=dirr))])
             output.extend(self._bamf(dest))
         else:
-            output.extend([('info', 'I think that\'s a wall')])
+            output.extend([('info', 'There\'s no there there.')])
         return output
     
     def render(self):
