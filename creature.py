@@ -38,8 +38,8 @@ class Creature():
         output = []
         dest = self.position.adjacent[dirr]
         if dest:
+            output.extend([('debug', 'Tried to move {dir}'.format(dir=dirr))])
             output.extend(self._bamf(dest))
-            output.extend([('debug', 'Moved {dir}'.format(dir=dirr))])
         else:
             output.extend([('info', 'I think that\'s a wall ',format(dir=dirr))])
         return output
