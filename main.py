@@ -92,6 +92,13 @@ if __name__ == '__main__':
     messages = urwid.ListBox([urwid.Text('Welcome to RUNES')])
     pile = urwid.Pile([('pack', map_box), ('pack', status_bar), ('pack',
         div), messages])
+
+    palette = [
+            ('map', 'default', 'default'),
+            ('player', 'bold', 'default'),
+            ('debug', 'light gray', 'default'),
+            ('info', 'dark gray', 'default'),
+            ('warn', 'dark red', 'default'),]
     
-    loop = urwid.MainLoop(pile, unhandled_input=handle_keys)
+    loop = urwid.MainLoop(pile, palette, unhandled_input=handle_keys)
     loop.run()
