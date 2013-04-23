@@ -11,7 +11,7 @@ class Cell():
         open            -- cell passable
         lit             -- cell lit by a light source
         glow            -- cell permanently lit by its own light source
-        seen            -- ceel is in player FOV
+        seen            -- cell is in player FOV
     """
     
     def __init__(self, contents=[], inscriptions=[], creature=None, open=True, 
