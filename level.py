@@ -43,9 +43,11 @@ class Map():
     
     def render(self):
         rendered = [[cell.render() for cell in row] for row in self.map]
+        result = []
         for row in rendered:
             row.append('\n')
-        return rendered
+            result.extend(row)
+        return result
 
     def draw_point(self, point, type='wall'):
         if type == 'wall':
