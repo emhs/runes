@@ -81,7 +81,7 @@ def handle_keys(key):
 if __name__ == '__main__':
     # Initialize map and player
     active_map = level.Map(architecture.Cell())
-    player = creature.Player(pos=active_map.map[8][8])
+    player = creature.Player(pos=active_map.cell(8, 8))
     active_map.draw_shape(((10,10), (10,20), (20,20), (20, 10)), closed=True)
     active_map.draw_point((15, 20), type='door')
     

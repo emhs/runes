@@ -50,9 +50,12 @@ class Creature():
     def open_door(self, dirr):
         output = []
         dest = self.position.adjacent[dirr]
+        if not dest:
+            output.extend(('info', 'There\'s no there there.'))
+            return output
         if dest.door:
             dest.open_door()
-            output.extend([('debug', 'Opened door to the '
+            output.append([('debug', 'Opened door to the '
                 '{dirr}'.format(dirr=dirr))])
         else:
             output.extend([('info', 'There\'s no door there')])
@@ -61,6 +64,9 @@ class Creature():
     def close_door(self, dirr):
         output = []
         dest = self.position.adjacent[dirr]
+        if not dest:
+            output.extend(('info', 'There\'s no there there.'))
+            return output
         if dest.door:
             dest.close_door()
             output.extend([('debug', 'Closed door to the '

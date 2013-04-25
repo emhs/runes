@@ -49,6 +49,9 @@ class Map():
             result.extend(row)
         return result
 
+    def cell(self, row, column):
+        return self.map[row][column]
+
     def draw_point(self, point, type='wall'):
         if type == 'wall':
             self.map[point[0]][point[1]].open = False
