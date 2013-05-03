@@ -3,24 +3,24 @@ dir = ['north', 'northeast', 'east', 'southeast', 'south', 'southwest',
 
 class Creature():
     """Base creature class
-    
+
     Attributes:
         position    -- current location
         inventory   -- items held by the creature
-    
+
     Methods:
-        go(dir)     -- Go to the next adjacent cell to the <dir> (Can be north, 
-                        south, east, west, northeast, southeast, southwest, or 
+        go(dir)     -- Go to the next adjacent cell to the <dir> (Can be north,
+                        south, east, west, northeast, southeast, southwest, or
                         northwest)
         _bamf(dest) -- Teleport the creature to destination Cell dest
     """
-    
+
     def __init__(self, pos, inv=[]):
         self.position = pos
         self.position.creature = self
         self.inventory = inv
         self.character = ('creature', 'm')
-    
+
     def _bamf(self, dest):
         output = []
         if not dest.open:
@@ -33,7 +33,7 @@ class Creature():
             self.position = dest
             output.extend([('debug', 'Bamf!')])
         return output
-    
+
     def go(self, dirr):
         output = []
         dest = self.position.adjacent[dirr]
@@ -43,7 +43,7 @@ class Creature():
         else:
             output.extend([('info', 'There\'s no there there.')])
         return output
-    
+
     def render(self):
         return self.character
 
@@ -60,7 +60,7 @@ class Creature():
         else:
             output.extend([('info', 'There\'s no door there')])
         return output
-    
+
     def close_door(self, dirr):
         output = []
         dest = self.position.adjacent[dirr]
@@ -74,7 +74,7 @@ class Creature():
         else:
             output.extend([('info', 'There\'s no door there')])
         return output
-    
+
 class Player(Creature):
     def __init__(self, pos, inv=[]):
         Creature.__init__(self, pos, inv)

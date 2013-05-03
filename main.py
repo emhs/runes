@@ -1,15 +1,14 @@
 #!/usr/bin/env python
-import sys
 import urwid
 import argparse
 from runes import architecture
-from runes import level
 from runes import creature
+from runes import architecture
 
 parser = argparse.ArgumentParser(prog='RUNES', description='Reality '
         'Undermining Magical Exploration Simulation\n\n'
         'RUNES is a roguelike with a complex and flexible magic system.')
-parser.add_argument('-d', '--debug', action='store_true', 
+parser.add_argument('-d', '--debug', action='store_true',
         dest='debug', help='Print debugging messages')
 parser.add_argument('-v', '--verbose', action='store_true',
         dest='verbose', help='Print informational messages')
@@ -73,8 +72,8 @@ def handle_keys(key):
     if output:
         output = output_filter(output, args)
         messages.body.contents.extend(map(urwid.Text, output))
-        messages.body.set_focus(messages.body.get_focus()[1]+len(output))
-    
+        messages.body.set_focus(messages.body.get_focus()[1] + len(output))
+
     # Re-render map after turn
     map_box.set_text(('map', active_map.render()))
 
@@ -82,9 +81,9 @@ if __name__ == '__main__':
     # Initialize map and player
     active_map = level.Map(architecture.Cell())
     player = creature.Player(pos=active_map.cell(8, 8))
-    active_map.draw_shape(((10,10), (10,20), (20,20), (20, 10)), closed=True)
+    active_map.draw_shape(((10, 10), (10, 20), (20, 20), (20, 10)), closed=True)
     active_map.draw_point((15, 20), type='door')
-    
+
     # Initialize layout
     map_box = urwid.Text(('map', active_map.render()))
     status_bar = urwid.Text(('status', 'Running...'))
@@ -98,7 +97,7 @@ if __name__ == '__main__':
             ('player', 'bold', 'default'),
             ('debug', 'light gray', 'default'),
             ('info', 'dark gray', 'default'),
-            ('warn', 'dark red', 'default'),]
-    
+            ('warn', 'dark red', 'default'), ]
+
     loop = urwid.MainLoop(pile, palette, unhandled_input=handle_keys)
     loop.run()
