@@ -8,6 +8,8 @@ RUNES is a roguelike designed with one purpose in mind: allow players to create 
 Current Features
 ----------------
 * Movement in an empty grid
+* Feature-drawing methods (walls, etc)
+* Doors!
 That's really it, but it feels good to get to a functional state.
 
 Planned Features
