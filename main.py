@@ -1,9 +1,32 @@
 #!/usr/bin/env python
+import os
+import sys
 import urwid
 import argparse
+import ConfigParser
 from runes import architecture
 from runes import creature
 from runes import architecture
+
+# Detect OS and select appropriate data directory
+if sys.platform.startswith('linux') or sys.platform == 'cygwin':
+    data_dir = os.path.join(os.environ['HOME'], '.runes')
+elif sys.platform.startswith('win'):
+    data_dir = os.path.join(os.environ['APPDATA'], 'runes')
+elif sys.platform == 'darwin':
+    data_dir = os.path.join(os.environ['HOME'], 'Library', 'runes')
+
+# Create data directory if it does not exist
+if not os.path.exists(data_dir):
+    os.mkdir(data_dir)
+
+# Read config file if it exists
+config_path = os.path.join(data_dir, 'runes.conf')
+if os.path.exists(config_path):
+    config = ConfigParser.ConfigParser()
+    config.read(config_path)
+    # Config options go herS
+
 
 parser = argparse.ArgumentParser(prog='RUNES', description='Reality '
         'Undermining Magical Exploration Simulation\n\n'
