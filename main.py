@@ -3,7 +3,8 @@ import os
 import sys
 import urwid
 import argparse
-import ConfigParser
+import random
+import yaml
 from runes import architecture
 from runes import creature
 from runes import architecture
@@ -25,8 +26,9 @@ config_path = os.path.join(data_dir, 'runes.conf')
 if os.path.exists(config_path):
     config = ConfigParser.ConfigParser()
     config.read(config_path)
-    # Config options go herS
+    # Config options go here
 
+# Load save file if it exists
 
 parser = argparse.ArgumentParser(prog='RUNES', description='Reality '
         'Undermining Magical Exploration Simulation\n\n'
