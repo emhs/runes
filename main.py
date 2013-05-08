@@ -24,11 +24,18 @@ if not os.path.exists(data_dir):
 # Read config file if it exists
 config_path = os.path.join(data_dir, 'runes.conf')
 if os.path.exists(config_path):
-    config = ConfigParser.ConfigParser()
-    config.read(config_path)
-    # Config options go here
+    with open(config_path) as config_file:
+        config = yaml.safe_load(config_file)
+else:
+    config = {}
+    # Default config goes here.
 
-# Load save file if it exists
+save_path = os.path.join(data_dir, 'runes.save')
+if os.path.exists(save_path):
+    with open(save_path) as save_file:
+        loaded_game = yaml.safe_load(save_file)
+        random.setstate(loaded_game[state])
+        # TODO: More game state here.
 
 parser = argparse.ArgumentParser(prog='RUNES', description='Reality '
         'Undermining Magical Exploration Simulation\n\n'
