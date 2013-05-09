@@ -38,6 +38,7 @@ if os.path.exists(save_path):
         loaded_game = yaml.safe_load(save_file)
         random.setstate(loaded_game[state])
         # TODO: More game state here.
+    os.remote(save_path)
 
 parser = argparse.ArgumentParser(prog='RUNES', description='Reality '
         'Undermining Magical Exploration Simulation\n\n'
@@ -87,6 +88,13 @@ do_function['close'] = do_close
 def do_quit(key):
     raise urwid.ExitMainLoop()
 do_function['quit'] = do_quit
+
+def do_save(key):
+    game_state = {}
+    game_state['state'] = random.getstate()
+    with open(save_path, 'w') as save_file:
+        yaml.dump(game_state, save_file)
+do_function['save'] = do_save
 
 # Extended command functions in the form of command_*
 
