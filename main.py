@@ -57,7 +57,65 @@ def output_filter(output, args):
     return output
 
 command = ''
+do_function = {}
 command_function = {}
+
+# Standard actions in the form of do_*
+
+def do_go(key):
+    global command
+    command = ''
+    output = []
+    output.extend(player.go(direction_keys[key]))
+    return output
+do_function['go'] = do_go
+
+def do_open(key):
+    global command
+    command = 'open'
+    output = []
+    return output
+do_function['open'] = do_open
+
+def do_close(key):
+    global command
+    command = 'close'
+    output = []
+    return output
+do_function['close'] = do_close
+
+def do_quit(key):
+    raise urwid.ExitMainLoop()
+do_function['quit'] = do_quit
+
+# Extended command functions in the form of command_*
+
+def command_open(key):
+    global command
+    output = []
+    if key in direction_keys:
+        output.extend(player.open_door(direction_keys[key]))
+    command = ''
+    return output
+command_function['open'] = command_open
+
+def command_close(key):
+    global command
+    output = []
+    if key in direction_keys:
+        output.extend(player.close_door(direction_keys[key]))
+    command = ''
+    return output
+command_function['close'] = command_close
+
+# Set keyboard mapping
+keymap = {}
+keymap['o'] = 'open'
+keymap['c'] = 'close'
+keymap['Q'] = 'quit'
+keymap['S'] = 'save'
+
+# Set direction keys based on numpad config option
 if config['numpad']:
     direction_keys = {
             '1': 'southwest',
@@ -79,23 +137,9 @@ else:
             'b': 'southwest',
             'n': 'southeast'}
 
-def command_open(key):
-    global command
-    output = []
-    if key in direction_keys:
-        output.extend(player.open_door(direction_keys[key]))
-    command = ''
-    return output
-command_function['open'] = command_open
-
-def command_close(key):
-    global command
-    output = []
-    if key in direction_keys:
-        output.extend(player.close_door(direction_keys[key]))
-    command = ''
-    return output
-command_function['close'] = command_close
+# Add direction keys to keymap
+for key in direction_keys.keys():
+    keymap[key] = 'go'
 
 def handle_keys(key):
     global command
@@ -103,17 +147,7 @@ def handle_keys(key):
     if command:
         output.extend(command_function[command](key))
     else:
-        # Movement keys
-        if key in direction_keys:
-            output.extend(player.go(direction_keys[key]))
-        # Doors
-        elif key == 'o':
-            command = 'open'
-        elif key == 'c':
-            command = 'close'
-        # Exit game
-        elif key in ('q', 'Q'):
-            raise urwid.ExitMainLoop()
+        output.extend(do_function[keymap[key]](key))
     if output:
         output = output_filter(output, args)
         messages.body.contents.extend(map(urwid.Text, output))
