@@ -27,7 +27,9 @@ if os.path.exists(config_path):
     with open(config_path) as config_file:
         config = yaml.safe_load(config_file)
 else:
-    config = {}
+    config = {
+              'numpad' : False
+              }
     # Default config goes here.
 
 save_path = os.path.join(data_dir, 'runes.save')
