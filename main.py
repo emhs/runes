@@ -58,15 +58,26 @@ def output_filter(output, args):
 
 command = ''
 command_function = {}
-direction_keys = {
-        'h': 'west',
-        'j': 'south',
-        'k': 'north',
-        'l': 'east',
-        'u': 'northeast',
-        'y': 'northwest',
-        'b': 'southwest',
-        'n': 'southeast'}
+if config['numpad']:
+    direction_keys = {
+            '1': 'southwest',
+            '2': 'south', 
+            '3': 'southeast',
+            '6': 'east', 
+            '9': 'northeast', 
+            '8': 'north', 
+            '7': 'northwest',
+            '4': 'west'}
+else:
+    direction_keys = {
+            'h': 'west',
+            'j': 'south',
+            'k': 'north',
+            'l': 'east',
+            'u': 'northeast',
+            'y': 'northwest',
+            'b': 'southwest',
+            'n': 'southeast'}
 
 def command_open(key):
     global command
